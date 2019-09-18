@@ -34,9 +34,9 @@ export class ChatBox extends Component {
   messageChatBot = async () => {
     try {
       const messageResponse = await postMessage(this.state.message);
-      this.props.addMessageToStore(messageResponse.message, false)
+      this.props.addMessageToStore(messageResponse.message, false);
     } catch({ message }) {
-      this.props.hasErrored(message)  
+      this.props.hasErrored(message)  ;
     }
   }
 

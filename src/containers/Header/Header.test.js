@@ -14,13 +14,13 @@ describe('Header component', () => {
     };
     wrapper = shallow(<Header user={mockUser} signOut={mockSignOut} />) 
   })
+
   it('should match the snapshot displaying a logout button if there is a user', () => {
     expect(wrapper).toMatchSnapshot()
   });
 
   it('should match the snapshot with just the title if there is no user', () => {
     const wrapper = shallow(<Header user={null} signOut={mockSignOut} />);
-
     expect(wrapper).toMatchSnapshot();
   });
 

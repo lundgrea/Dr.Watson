@@ -36,14 +36,12 @@ describe('App component', () => {
       removeUser={mockRemoveUser}
       hasErrored={mockHasErrored}
     />);
-
     expect(wrapper).toMatchSnapshot();
   });
 
 
   it('should call endConversation, and removeUser if someone signs out', async () => {
     await wrapper.instance().signOut();
-
     expect(endConversation).toHaveBeenCalled();
     expect(mockRemoveUser).toHaveBeenCalled();
   });
@@ -52,9 +50,7 @@ describe('App component', () => {
     endConversation.mockImplementation(() => {
       return Promise.reject(Error('fetch failed.'));
     });
-
     await wrapper.instance().signOut();
-
     expect(mockHasErrored).toHaveBeenCalledWith('fetch failed.');
   });
 });
@@ -79,9 +75,7 @@ describe('mapStateToProps', () => {
     const expected = {
       user: mockUser
     }
-
     const mappedProps = mapStateToProps(mockState);
-    
     expect(mappedProps).toEqual(expected);
   });
 });
@@ -90,30 +84,24 @@ describe('mapDispatchToProps', () => {
   it('calls dispatch with a removeUser action when removeUser is called', () => {
     const mockDispatch = jest.fn();
     const actionToDispatch = removeUser();
-
     const mappedProps = mapDispatchToProps(mockDispatch);
     mappedProps.removeUser();
-
     expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
   });
 
   it('calls dispatch with a hasErrored action when hasErrored is called', () => {
     const mockDispatch = jest.fn();
     const actionToDispatch = hasErrored('fetch failed');
-
     const mappedProps = mapDispatchToProps(mockDispatch);
     mappedProps.hasErrored('fetch failed');
-
     expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
   });
 
   it('calls dispatch with a clearStoredMessages action when clearStoredMessages is called', () => {
     const mockDispatch = jest.fn();
     const actionToDispatch = clearStoredMessages();
-
     const mappedProps = mapDispatchToProps(mockDispatch);
     mappedProps.clearStoredMessages();
-
     expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
   });
 });

@@ -97,7 +97,7 @@ describe('ChatBox component', () => {
     wrapper.instance().setState({ message: 'Hi there.' });
     await wrapper.instance().messageChatBot();
 
-    expect(postMessage).toHaveBeenCalledWith('Hi there.')
+    expect(postMessage).toHaveBeenCalledWith('Hi there.');
   });
 
   it('should call hasErrored if messageChatBot rejects', async () => {
@@ -112,7 +112,7 @@ describe('ChatBox component', () => {
 
     await wrapper.instance().messageChatBot();
 
-    expect(mockHasErrored).toHaveBeenCalledWith('fetch failed.')
+    expect(mockHasErrored).toHaveBeenCalledWith('fetch failed.');
   });
 });
 
@@ -147,8 +147,8 @@ describe('mapStateToProps', () => {
       messages: [{message: 'My name is Watson', isUser: false}, {message: 'Hi back', isUser: true}]
     }
     const expected = {errorMsg: '', messages: [{"isUser": false, "message": "My name is Watson"}, {"isUser": true, "message": "Hi back"}]}
-    const mappedProps = mapStateToProps(mockState)
-    expect(mappedProps).toEqual(expected)
+    const mappedProps = mapStateToProps(mockState);
+    expect(mappedProps).toEqual(expected);
   })
 });
 
