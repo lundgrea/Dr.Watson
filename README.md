@@ -43,7 +43,12 @@ You can run the full program test suite with `npm test`.
 #### Dr Watson Chat Screenshot
 ![dr-watson-chat-screenshot](./assets/dr-watson-chat-screenshot.png)
 
-#### Dr Watson Wire Frame
+#### Dr Watson React Wire Frame
+![dr-watson-react-wireframe](./assets/dr-watson-react-wireframe.jpeg)
+
+#### Dr Watson Redux Wire Frame
+![dr-watson-redux-wireframe](./assets/dr-watson-redux-wireframe.jpeg)
+
 
 ### Endpoints
 
