@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { ChatBox, mapStateToProps, mapDispatchToProps } from './ChatBox';
-import { hasErrored } from '../../actions';
+import { hasErrored, addMessageToStore } from '../../actions';
 import { postMessage } from '../../apiCalls';
 
 jest.mock('../../apiCalls');
@@ -9,7 +9,7 @@ jest.mock('../../apiCalls');
 describe('ChatBox component', () => {
   let wrapper
   const mockHasErrored = jest.fn();
-  const mockAddMessage = jest.fn();
+  const mockAddMessagesToStore = jest.fn();
   const mockMessages = [
     {
       message: "Hello, I am Dr. Watson.  My understanding is that you are feeling tired.  Have you been feeling anxious this week?",
@@ -55,9 +55,9 @@ describe('ChatBox component', () => {
 
   it('should call messageChatBot, and clear state when calling handleSubmit pressing Enter', () => {
     wrapper = mount(<ChatBox
-      addMessage={mockAddMessage}
       messages={mockMessages}
       hasErrored={mockHasErrored}
+      addMessageToStore={mockAddMessagesToStore}
     />);
     wrapper.instance().messageChatBot = jest.fn();
 
@@ -70,7 +70,7 @@ describe('ChatBox component', () => {
 
   it('should call addMessage, messageChatBot, and clear state when calling handleSubmit clicking the button', () => {
     wrapper = mount(<ChatBox
-      addMessage={mockAddMessage}
+      addMessageToStore={mockAddMessagesToStore}
       messages={mockMessages}
       hasErrored={mockHasErrored}
     />);
@@ -85,6 +85,7 @@ describe('ChatBox component', () => {
 
   it('should call postMessage and addMessage when calling messageChatBot', async () => {
     wrapper = mount(<ChatBox
+      addMessageToStore={mockAddMessagesToStore}
       messages={mockMessages}
       hasErrored={mockHasErrored}
     />);
@@ -123,23 +124,34 @@ describe('mapStateToProps', () => {
       lastName: "Rollins",
       feeling: "tired"
     };
-
     const mockState = {
       user: mockUser,
-      messages: [{
-        message: 'Hi there, my name is Dr. Watson. I understand that you have been feeling happy. That is super exciting to hear!',
-        isUser: false,
-      }],
-      errorMsg: ''
-    };
-    const expected = {
-      errorMsg: ''
-    };
+      errorMsg: '',
+      messages: [{message: 'My name is Watson', isUser: false}, {message: 'Hi back', isUser: true}]
+    }
+    const expected = {errorMsg: '', messages: [{"isUser": false, "message": "My name is Watson"}, {"isUser": true, "message": "Hi back"}]}   
     const mappedProps = mapStateToProps(mockState);
-
     expect(mappedProps).toEqual(expected);
   });
+
+  it('should return an array with the messages', () => {
+    const mockUser = {
+      id: 1568665187737,
+      firstName: "Travis",
+      lastName: "Rollins",
+      feeling: "tired"
+    };
+    const mockState = {
+      user: mockUser,
+      errorMsg: '',
+      messages: [{message: 'My name is Watson', isUser: false}, {message: 'Hi back', isUser: true}]
+    }
+    const expected = {errorMsg: '', messages: [{"isUser": false, "message": "My name is Watson"}, {"isUser": true, "message": "Hi back"}]}
+    const mappedProps = mapStateToProps(mockState)
+    expect(mappedProps).toEqual(expected)
+  })
 });
+
 
 describe('mapDispatchToProps', () => {
   it('calls dispatch with a hasErrored action when hasErrored is called', () => {
@@ -151,4 +163,14 @@ describe('mapDispatchToProps', () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
   });
+
+  it('should dispatch with a addMessagesToStore action when addMessageToStore is called', () => {
+    const mockDispatch = jest.fn();
+    const actionToDispatch = addMessageToStore({message: 'hi', isUser: false});
+
+    const mappedProps = mapDispatchToProps(mockDispatch);
+    mappedProps.addMessageToStore({message: 'hi', isUser: false});
+
+    expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
+  })
 });

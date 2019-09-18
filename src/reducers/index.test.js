@@ -1,5 +1,6 @@
 import { errorMsg } from '../reducers/errorMsg';
-import { user } from '../reducers/user'
+import { user } from '../reducers/user';
+import { messages } from '../reducers/messagesReducer';
 
 describe('errorMsg', () => {
   it('should return the initial state', () => {
@@ -17,9 +18,6 @@ describe('errorMsg', () => {
     expect(results).toEqual('error message')
   });
 });
-
-
-
 
 describe('user', () => {
   it('should return the initial state', () => {
@@ -49,5 +47,37 @@ describe('user', () => {
     };
     const result = user(undefined, mockAction)
     expect(result).toEqual(null)
+  });
+});
+
+
+describe('messages', () => {
+  it('should return the initial state', () => {
+    const expected = [];
+    const result = messages(undefined, {});
+    expect(result).toEqual(expected);
+  });
+
+  it('should update the store with a new message', () => {
+    const mockMessage = {
+      message: 'Some very important message from the Doctor',
+      isUser: false
+    }
+    const mockAction = {
+      type: 'ADD_MESSAGE',
+      message: 'Some very important message from the Doctor',
+      isUser: false
+    }
+    const result = messages(undefined, mockAction)
+    expect(result).toEqual([mockMessage])
+  });
+
+  it('should remove the messages from the store', () => {
+    const mockEarlyState = [{message:'Some very important message from the Doctor', isUser: false}]
+    const mockAction = {
+      type: 'CLEAR_MESSAGES'
+    }
+    const result = messages(mockEarlyState, mockAction)
+    expect(result).toEqual([])
   });
 });

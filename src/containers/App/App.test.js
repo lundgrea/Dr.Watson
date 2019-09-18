@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { App, mapStateToProps, mapDispatchToProps } from './App';
-import { removeUser, hasErrored } from '../../actions';
+import { removeUser, hasErrored, clearStoredMessages } from '../../actions';
 import { endConversation } from '../../apiCalls';
 
 jest.mock('../../apiCalls');
@@ -103,6 +103,16 @@ describe('mapDispatchToProps', () => {
 
     const mappedProps = mapDispatchToProps(mockDispatch);
     mappedProps.hasErrored('fetch failed');
+
+    expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
+  });
+
+  it('calls dispatch with a clearStoredMessages action when clearStoredMessages is called', () => {
+    const mockDispatch = jest.fn();
+    const actionToDispatch = clearStoredMessages();
+
+    const mappedProps = mapDispatchToProps(mockDispatch);
+    mappedProps.clearStoredMessages();
 
     expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch);
   });
