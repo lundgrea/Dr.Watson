@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createUser, hasErrored } from '../../actions'
+import { createUser, hasErrored, addMessageToStore } from '../../actions'
 import { startConversation } from '../../apiCalls';
 import './WelcomeModal.css'
 
@@ -48,9 +48,7 @@ export class WelcomeModal extends Component {
   connectToChatBot = async () => {
     try {
       const firstMessage = await startConversation(this.state.feeling);
-      //firstMessage comes back as an object {message:''}
-      //response of the api is saved as the first message in the App's state's messages array of objects {message: '', isUser: bool}
-      this.props.addMessage(firstMessage.message, false);
+      this.props.addMessageToStore(firstMessage.message, false);
     } catch({ message }) {
       this.props.hasErrored(message);
     }
@@ -91,6 +89,6 @@ export class WelcomeModal extends Component {
   }
 }
 
-export const mapDispatchToProps = dispatch => bindActionCreators({ createUser, hasErrored }, dispatch)
+export const mapDispatchToProps = dispatch => bindActionCreators({ createUser, hasErrored, addMessageToStore }, dispatch)
 
 export default connect(null, mapDispatchToProps)(WelcomeModal);
