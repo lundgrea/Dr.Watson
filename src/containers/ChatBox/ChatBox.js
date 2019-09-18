@@ -54,7 +54,9 @@ export class ChatBox extends Component {
     const survey = messages.map((message, i) => {
       return <Message
         key={`message${i}`}
+        //message from messages array from App
         message={message.message}
+        //isUser from messages array from App
         isUser={message.isUser}
       />
     })
