@@ -11,7 +11,6 @@ export const Header = ({ user, signOut }) => {
   )
 }
 
-//allows for conditional rendering of the Header
 export const mapStateToProps = ({ user }) => ({
   user
 })

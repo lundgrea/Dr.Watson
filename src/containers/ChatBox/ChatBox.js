@@ -23,14 +23,9 @@ export class ChatBox extends Component {
   }
 
   handleSubmit = e => {
-    console.log('inside the chatbox handle submit')
     if (e.key === 'Enter' || e.button === 0) {
-      //grab message from local state
       const { message } = this.state;
-      //addMessage to messages list passed down from App
       this.props.addMessageToStore(message, true);
-      // this.props.addMessage(message, true);
-      //clear local state
       this.setState({ message: '' });
       this.messageChatBot();
     }
@@ -38,12 +33,8 @@ export class ChatBox extends Component {
 
   messageChatBot = async () => {
     try {
-      //send user message to api and await response 
       const messageResponse = await postMessage(this.state.message);
-      console.log(messageResponse)
-      //save api response to App's messages array
       this.props.addMessageToStore(messageResponse.message, false)
-      // this.props.addMessage(messageResponse.message, false);
     } catch({ message }) {
       this.props.hasErrored(message)  
     }
