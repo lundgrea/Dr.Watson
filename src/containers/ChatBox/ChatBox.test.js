@@ -9,7 +9,7 @@ jest.mock('../../apiCalls');
 describe('ChatBox component', () => {
   let wrapper
   const mockHasErrored = jest.fn();
-  const mockAddMessage = jest.fn();
+  const mockAddMessagesToStore = jest.fn();
   const mockMessages = [
     {
       message: "Hello, I am Dr. Watson.  My understanding is that you are feeling tired.  Have you been feeling anxious this week?",
@@ -53,52 +53,52 @@ describe('ChatBox component', () => {
     expect(wrapper.state('message')).toEqual('Hello world');
   });
 
-  // it('should call messageChatBot, and clear state when calling handleSubmit pressing Enter', () => {
-    // wrapper = mount(<ChatBox
-    //   // addMessage={mockAddMessage}
-    //   messages={mockMessages}
-    //   hasErrored={mockHasErrored}
-    // />);
-    // wrapper.instance().messageChatBot = jest.fn();
-    // wrapper.instance().addMessageToStore = jest.fn()
+  it('should call messageChatBot, and clear state when calling handleSubmit pressing Enter', () => {
+    wrapper = mount(<ChatBox
+      messages={mockMessages}
+      hasErrored={mockHasErrored}
+      addMessageToStore={mockAddMessagesToStore}
+    />);
+    wrapper.instance().messageChatBot = jest.fn();
 
-  //   wrapper.setState({ message: 'Hello world' });
-  //   wrapper.instance().handleSubmit({ key: 'Enter' });
+    wrapper.setState({ message: 'Hello world' });
+    wrapper.instance().handleSubmit({ key: 'Enter' });
 
-  //   expect(wrapper.state('message')).toEqual('');
-  //   expect(wrapper.instance().messageChatBot).toHaveBeenCalled();
-  // });
+    expect(wrapper.state('message')).toEqual('');
+    expect(wrapper.instance().messageChatBot).toHaveBeenCalled();
+  });
 
-  // it('should call addMessage, messageChatBot, and clear state when calling handleSubmit clicking the button', () => {
-  //   wrapper = mount(<ChatBox
-  //     addMessage={mockAddMessage}
-  //     messages={mockMessages}
-  //     hasErrored={mockHasErrored}
-  //   />);
-  //   wrapper.instance().messageChatBot = jest.fn();
+  it('should call addMessage, messageChatBot, and clear state when calling handleSubmit clicking the button', () => {
+    wrapper = mount(<ChatBox
+      addMessageToStore={mockAddMessagesToStore}
+      messages={mockMessages}
+      hasErrored={mockHasErrored}
+    />);
+    wrapper.instance().messageChatBot = jest.fn();
 
-  //   wrapper.setState({ message: 'Hello world' });
-  //   wrapper.instance().handleSubmit({ button: 0 });
+    wrapper.setState({ message: 'Hello world' });
+    wrapper.instance().handleSubmit({ button: 0 });
 
-  //   expect(wrapper.state('message')).toEqual('');
-  //   expect(wrapper.instance().messageChatBot).toHaveBeenCalled();
-  // });
+    expect(wrapper.state('message')).toEqual('');
+    expect(wrapper.instance().messageChatBot).toHaveBeenCalled();
+  });
 
-  // it('should call postMessage and addMessage when calling messageChatBot', async () => {
-  //   wrapper = mount(<ChatBox
-  //     messages={mockMessages}
-  //     hasErrored={mockHasErrored}
-  //   />);
+  it('should call postMessage and addMessage when calling messageChatBot', async () => {
+    wrapper = mount(<ChatBox
+      addMessageToStore={mockAddMessagesToStore}
+      messages={mockMessages}
+      hasErrored={mockHasErrored}
+    />);
 
-  //   postMessage.mockImplementation(() => {
-  //     return Promise.resolve({ message: 'My name is Dr. Watson.  How are you today?' });
-  //   });
+    postMessage.mockImplementation(() => {
+      return Promise.resolve({ message: 'My name is Dr. Watson.  How are you today?' });
+    });
 
-  //   wrapper.instance().setState({ message: 'Hi there.' });
-  //   await wrapper.instance().messageChatBot();
+    wrapper.instance().setState({ message: 'Hi there.' });
+    await wrapper.instance().messageChatBot();
 
-  //   expect(postMessage).toHaveBeenCalledWith('Hi there.')
-  // });
+    expect(postMessage).toHaveBeenCalledWith('Hi there.')
+  });
 
   it('should call hasErrored if messageChatBot rejects', async () => {
     wrapper = mount(<ChatBox
