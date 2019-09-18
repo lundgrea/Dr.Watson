@@ -42,4 +42,12 @@ describe('user', () => {
     const result = user(undefined, mockAction);
     expect(result).toEqual(mockUser)
   })
+
+  it('should remove a user from the store', () => { 
+    const mockAction = {
+      type: 'REMOVE_USER'
+    };
+    const result = user(undefined, mockAction)
+    expect(result).toEqual(null)
+  });
 });
