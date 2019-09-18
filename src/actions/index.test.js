@@ -35,8 +35,8 @@ describe('actions', () => {
       type: 'HAS_ERRORED',
       errorMsg: 'ERRORRRR'
     }
-    const result = actions.hasErrored(mockError)
-    expect(result).toEqual(expectedAction)
+    const result = actions.hasErrored(mockError);
+    expect(result).toEqual(expectedAction);
   });
 
   it('should have a type of ADD_MESSAGE', () => {
@@ -46,14 +46,14 @@ describe('actions', () => {
       isUser: false
     }
     const result = actions.addMessageToStore('Some important message from the Doctor', false);
-    expect(result).toEqual(expectedAction)
-  })
+    expect(result).toEqual(expectedAction);
+  });
 
   it('should have a type of CLEAR_MESSAGES', () => {
       const expectedAction = {
         type: 'CLEAR_MESSAGES'
       }
       const result = actions.clearStoredMessages();
-      expect(result).toEqual(expectedAction)
-  })
+      expect(result).toEqual(expectedAction);
+  });
 });

@@ -22,15 +22,15 @@ export class WelcomeModal extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.checkInputs()
+    this.checkInputs();
   }
 
   checkInputs = () => {
     const {firstName, lastName, feeling} = this.state
     if (!firstName || !lastName || !feeling) {
-      this.setState({error: 'Please make sure you have filled everything out.'})
+      this.setState({error: 'Please make sure you have filled everything out.'});
     } else {
-      this.createConfirmedUser()
+      this.createConfirmedUser();
     }
   }
 
@@ -42,7 +42,7 @@ export class WelcomeModal extends Component {
       lastName,
       feeling,
     });
-    this.connectToChatBot()
+    this.connectToChatBot();
   }
 
   connectToChatBot = async () => {
