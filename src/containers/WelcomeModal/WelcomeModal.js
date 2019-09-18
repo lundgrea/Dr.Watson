@@ -30,11 +30,11 @@ export class WelcomeModal extends Component {
     if (!firstName || !lastName || !feeling) {
       this.setState({error: 'Please make sure you have filled everything out.'})
     } else {
-      this.createUser()
+      this.createConfirmedUser()
     }
   }
 
-  createUser = () => {
+  createConfirmedUser = () => {
     const {firstName, lastName, feeling} = this.state
     this.props.createUser({
       id: Date.now(),
