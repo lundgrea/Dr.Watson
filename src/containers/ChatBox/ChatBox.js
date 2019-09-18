@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { hasErrored } from '../../actions';
+import { hasErrored, addMessageToStore } from '../../actions';
 import { postMessage } from '../../apiCalls';
 import Message from '../../components/Message/Message'
 
@@ -23,11 +23,13 @@ export class ChatBox extends Component {
   }
 
   handleSubmit = e => {
+    console.log('inside the chatbox handle submit')
     if (e.key === 'Enter' || e.button === 0) {
       //grab message from local state
       const { message } = this.state;
       //addMessage to messages list passed down from App
-      this.props.addMessage(message, true);
+      this.props.addMessageToStore(message, true);
+      // this.props.addMessage(message, true);
       //clear local state
       this.setState({ message: '' });
       this.messageChatBot();
@@ -38,25 +40,22 @@ export class ChatBox extends Component {
     try {
       //send user message to api and await response 
       const messageResponse = await postMessage(this.state.message);
+      console.log(messageResponse)
       //save api response to App's messages array
-      this.props.addMessage(messageResponse.message, false);
+      this.props.addMessageToStore(messageResponse.message, false)
+      // this.props.addMessage(messageResponse.message, false);
     } catch({ message }) {
       this.props.hasErrored(message)  
     }
   }
 
   render() {
-    //message from local state
     const { message } = this.state;
-    //messages passed down from App state
-    //errorMsg from Redux store
     const { messages, errorMsg } = this.props;
     const survey = messages.map((message, i) => {
       return <Message
         key={`message${i}`}
-        //message from messages array from App
         message={message.message}
-        //isUser from messages array from App
         isUser={message.isUser}
       />
     })
@@ -80,10 +79,11 @@ export class ChatBox extends Component {
   }
 }
 
-export const mapStateToProps = ({ errorMsg }) => ({
-  errorMsg
+export const mapStateToProps = ({ errorMsg, messages }) => ({
+  errorMsg,
+  messages
 })
 
-export const mapDispatchToProps = dispatch => bindActionCreators({ hasErrored }, dispatch);
+export const mapDispatchToProps = dispatch => bindActionCreators({ hasErrored, addMessageToStore }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatBox);
