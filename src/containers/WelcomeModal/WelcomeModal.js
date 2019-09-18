@@ -48,6 +48,8 @@ export class WelcomeModal extends Component {
   connectToChatBot = async () => {
     try {
       const firstMessage = await startConversation(this.state.feeling);
+      //firstMessage comes back as an object {message:''}
+      //response of the api is saved as the first message in the App's state's messages array of objects {message: '', isUser: bool}
       this.props.addMessage(firstMessage.message, false);
     } catch({ message }) {
       this.props.hasErrored(message);

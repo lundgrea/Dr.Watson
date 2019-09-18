@@ -24,8 +24,11 @@ export class ChatBox extends Component {
 
   handleSubmit = e => {
     if (e.key === 'Enter' || e.button === 0) {
+      //grab message from local state
       const { message } = this.state;
+      //addMessage to messages list passed down from App
       this.props.addMessage(message, true);
+      //clear local state
       this.setState({ message: '' });
       this.messageChatBot();
     }
@@ -33,7 +36,9 @@ export class ChatBox extends Component {
 
   messageChatBot = async () => {
     try {
+      //send user message to api and await response 
       const messageResponse = await postMessage(this.state.message);
+      //save api response to App's messages array
       this.props.addMessage(messageResponse.message, false);
     } catch({ message }) {
       this.props.hasErrored(message)  
@@ -41,7 +46,10 @@ export class ChatBox extends Component {
   }
 
   render() {
+    //message from local state
     const { message } = this.state;
+    //messages passed down from App state
+    //errorMsg from Redux store
     const { messages, errorMsg } = this.props;
     const survey = messages.map((message, i) => {
       return <Message

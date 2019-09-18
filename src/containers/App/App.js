@@ -16,6 +16,7 @@ export class App extends Component {
     }
   }
 
+  //passed down to WelcomeModal and ChatBox
   addMessage = (message, isUser) => {
     const { messages } = this.state;
     this.setState({ messages: [...messages, { message, isUser }]});
@@ -25,6 +26,7 @@ export class App extends Component {
     this.setState({ messages: [] });
   }
 
+  //passed down to Header
   signOut = async () => {
     try {
       await endConversation();
@@ -48,10 +50,12 @@ export class App extends Component {
   }
 }
 
+//allows for conditional rendering of the Modal and ChatBox
 export const mapStateToProps = ({ user }) => ({
   user,
 });
 
+//both methods related to signOut
 export const mapDispatchToProps = dispatch =>  bindActionCreators({ removeUser, hasErrored }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
