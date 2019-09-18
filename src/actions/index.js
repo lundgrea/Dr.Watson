@@ -12,7 +12,7 @@ export const hasErrored = errorMsg => ({
   errorMsg
 });
 
-export const addMessage = (message, isUser) => ({
+export const addMessageToStore = (message, isUser) => ({
   type: 'ADD_MESSAGE',
   message,
   isUser
