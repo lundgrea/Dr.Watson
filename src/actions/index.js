@@ -12,3 +12,9 @@ export const hasErrored = errorMsg => ({
   errorMsg
 });
 
+export const addMessage = (message, isUser) => ({
+  type: 'ADD_MESSAGE',
+  message,
+  isUser
+});
+
