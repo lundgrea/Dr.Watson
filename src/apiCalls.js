@@ -30,7 +30,7 @@ export const postMessage = async newMessage => {
 
   const response = await fetch(url, options);
   if(!response.ok) {
-    throw Error('Dr. Watson is not in the office. Please try again later.')
+    throw Error('Dr Watson is currently down.  Please try again later.')
   }
 
   const data = await response.json();
