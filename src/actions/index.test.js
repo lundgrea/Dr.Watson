@@ -37,5 +37,27 @@ describe('actions', () => {
     }
     const result = actions.hasErrored(mockError)
     expect(result).toEqual(expectedAction)
+  });
+
+  // it('should have a type of ADD_MESSAGE', () => {
+  //   const newMessage = {
+  //     message: 'Some important message from the Doctor',
+  //     isUser: false
+  //   }
+  //   const expectedAction = {
+  //     type: 'ADD_MESSAGE',
+  //     message: 'Some important message from the Doctor',
+  //     isUser: false
+  //   }
+  //   const result = actions.addMessageToStore(newMessage);
+  //   expect(result).toEqual(expectedAction)
+  // })
+
+  it('should have a type of CLEAR_MESSAGES', () => {
+      const expectedAction = {
+        type: 'CLEAR_MESSAGES'
+      }
+      const result = actions.clearStoredMessages();
+      expect(result).toEqual(expectedAction)
   })
 });
