@@ -39,19 +39,15 @@ describe('actions', () => {
     expect(result).toEqual(expectedAction)
   });
 
-  // it('should have a type of ADD_MESSAGE', () => {
-  //   const newMessage = {
-  //     message: 'Some important message from the Doctor',
-  //     isUser: false
-  //   }
-  //   const expectedAction = {
-  //     type: 'ADD_MESSAGE',
-  //     message: 'Some important message from the Doctor',
-  //     isUser: false
-  //   }
-  //   const result = actions.addMessageToStore(newMessage);
-  //   expect(result).toEqual(expectedAction)
-  // })
+  it('should have a type of ADD_MESSAGE', () => {
+    const expectedAction = {
+      type: 'ADD_MESSAGE',
+      message: 'Some important message from the Doctor',
+      isUser: false
+    }
+    const result = actions.addMessageToStore('Some important message from the Doctor', false);
+    expect(result).toEqual(expectedAction)
+  })
 
   it('should have a type of CLEAR_MESSAGES', () => {
       const expectedAction = {
