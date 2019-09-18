@@ -18,3 +18,6 @@ export const addMessageToStore = (message, isUser) => ({
   isUser
 });
 
+export const clearStoredMessages = () => ({
+  type: 'CLEAR_MESSAGES'
+});
